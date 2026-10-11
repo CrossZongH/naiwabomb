@@ -1,0 +1,11 @@
+# 已整理到 assets/ 的原始素材副本
+奶蛋.jpg
+思考.jpg
+惊鸿一瞥.jpg
+胜利失败结算.jpg
+奶蛙大笑视频.mp3
+奶蛙大笑视频.mp4
+
+# 本地开发文件
+node_modules/
+.DS_Store

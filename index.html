@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#fff7dc" />
+    <meta name="description" content="奶蛙无尽扫雷小游戏" />
+    <title>奶蛙扫雷 · 无尽挑战</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">MILK FROG · MINESWEEPER</p>
+          <h1>奶蛙扫雷</h1>
+          <p class="subtitle">一格一格找出安全的路，看看你能连胜多少关。</p>
+        </div>
+        <img class="hero-frog" src="assets/hero.jpg" alt="奶蛙思考中" />
+      </header>
+
+      <section class="status-bar" aria-label="当前挑战状态">
+        <div class="stat"><span>关卡</span><strong id="level">1</strong></div>
+        <div class="stat"><span>剩余雷</span><strong id="mines-left">12</strong></div>
+        <div class="stat"><span>连胜</span><strong id="streak">0</strong></div>
+        <button class="reset-button" id="reset-button" type="button">重新开始</button>
+      </section>
+
+      <section class="game-card">
+        <div class="game-hint"><span class="dot"></span><span>短按翻开 · 长按插旗</span></div>
+        <div id="board" class="board" role="grid" aria-label="扫雷棋盘"></div>
+      </section>
+
+      <section class="tips" aria-label="玩法说明">
+        <div><span class="tip-icon">👆</span><span>短按格子<br /><b>揭开秘密</b></span></div>
+        <div><span class="tip-icon">🏴</span><span>长按格子<br /><b>插旗 / 取消</b></span></div>
+        <div><span class="tip-icon">♾️</span><span>清完所有安全格<br /><b>自动进入下一关</b></span></div>
+      </section>
+    </main>
+
+    <div class="result-overlay" id="result-overlay" hidden>
+      <div class="result-panel" role="dialog" aria-modal="true" aria-labelledby="result-title">
+        <img src="assets/result.jpg" alt="奶蛙开心大笑" />
+        <p class="result-kicker" id="result-kicker">本关完成</p>
+        <h2 id="result-title">挑战胜利</h2>
+        <p id="result-detail">准备好迎接下一关了吗？</p>
+        <button class="primary-button" id="result-button" type="button">继续挑战</button>
+      </div>
+    </div>
+
+    <audio id="win-audio" preload="auto" src="assets/laugh.mp3"></audio>
+    <script src="app.js"></script>
+  </body>
+</html>
