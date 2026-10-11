@@ -29,8 +29,9 @@ button { font: inherit; }
 .hero-copy { position: relative; z-index: 1; }
 .eyebrow { margin: 0 0 8px; color: var(--orange); font-size: 10px; font-weight: 800; letter-spacing: .16em; }
 h1 { margin: 0; font-size: clamp(32px, 10vw, 48px); letter-spacing: -.07em; line-height: 1; }
-.subtitle { max-width: 210px; margin: 13px 0 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
-.credits { display: grid; gap: 2px; margin-top: 9px; color: #a18b5d; font-size: 10px; line-height: 1.35; }
+.subtitle-row { display: flex; align-items: flex-end; gap: 7px; margin-top: 13px; }
+.subtitle { flex: 1; min-width: 0; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
+.credits { flex: 0 0 auto; display: grid; gap: 1px; padding-bottom: 1px; color: #9b9b9b; font-size: 8px; line-height: 1.35; white-space: nowrap; }
 .hero-frog { width: 126px; height: 150px; object-fit: cover; object-position: 50% 45%; align-self: flex-end; margin-right: -13px; mix-blend-mode: multiply; }
 
 .status-bar { display: grid; grid-template-columns: repeat(3, 1fr) auto; gap: 8px; align-items: center; margin: 17px 0 12px; }
