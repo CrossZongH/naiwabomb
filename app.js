@@ -179,6 +179,7 @@ function showResult(won) {
   updateStats();
 
   if (won) {
+    resultOverlay.classList.remove('reveal-phase');
     resultTitle.textContent = '挑战胜利';
     resultTitle.className = 'win';
     resultKicker.textContent = `第 ${level} 关完成`;
@@ -191,6 +192,7 @@ function showResult(won) {
   }
 
   // 失败先停在雷区展示阶段，4 秒后才显示最终结算和播放音频。
+  resultOverlay.classList.add('reveal-phase');
   resultTitle.textContent = '踩到雷了！';
   resultTitle.className = 'lose mine-warning-title';
   resultKicker.textContent = '所有奶蛋雷已显示';
@@ -198,6 +200,7 @@ function showResult(won) {
   resultButton.hidden = true;
   resultTimer = window.setTimeout(() => {
     if (!ended) return;
+    resultOverlay.classList.remove('reveal-phase');
     resultTitle.textContent = '挑战失败';
     resultTitle.className = 'lose';
     resultKicker.textContent = '本关挑战结束';
@@ -212,6 +215,8 @@ function showResult(won) {
 function closeResult() {
   if (resultButton.hidden) return;
   window.clearTimeout(resultTimer);
+  laughAudio.pause();
+  laughAudio.currentTime = 0;
   resultOverlay.hidden = true;
   if (resultTitle.classList.contains('win')) level += 1;
   else streak = 0;
@@ -220,6 +225,8 @@ function closeResult() {
 
 resetButton.addEventListener('click', () => {
   window.clearTimeout(resultTimer);
+  laughAudio.pause();
+  laughAudio.currentTime = 0;
   resultOverlay.hidden = true;
   level = 1;
   streak = 0;
