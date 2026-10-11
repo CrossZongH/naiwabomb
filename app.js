@@ -23,6 +23,7 @@ let firstMove = true;
 let longPressTimer = null;
 let pressTarget = null;
 let longPressTriggered = false;
+let resultTimer = null;
 
 function makeBoard() {
   ended = false;
@@ -173,26 +174,57 @@ function updateStats() {
 }
 
 function showResult(won) {
-  resultTitle.textContent = won ? '挑战胜利' : '挑战失败';
-  resultTitle.className = won ? 'win' : 'lose';
-  resultKicker.textContent = won ? `第 ${level} 关完成` : '小心踩到雷啦';
-  resultDetail.textContent = won ? '奶蛙带你继续向前，下一关雷区更难发现。' : '别气馁，调整一下思路，再来一次挑战。';
-  resultButton.textContent = won ? '进入下一关' : '重新挑战';
+  window.clearTimeout(resultTimer);
   resultOverlay.hidden = false;
   updateStats();
-  laughAudio.currentTime = 0;
-  laughAudio.play().catch(() => {});
+
+  if (won) {
+    resultTitle.textContent = '挑战胜利';
+    resultTitle.className = 'win';
+    resultKicker.textContent = `第 ${level} 关完成`;
+    resultDetail.textContent = '准备好后点击按钮，进入下一关。';
+    resultButton.textContent = '进入下一关';
+    resultButton.hidden = false;
+    laughAudio.currentTime = 0;
+    laughAudio.play().catch(() => {});
+    return;
+  }
+
+  // 失败先停在雷区展示阶段，4 秒后才显示最终结算和播放音频。
+  resultTitle.textContent = '踩到雷了！';
+  resultTitle.className = 'lose mine-warning-title';
+  resultKicker.textContent = '所有奶蛋雷已显示';
+  resultDetail.textContent = '看清雷区，4 秒后查看挑战结算。';
+  resultButton.hidden = true;
+  resultTimer = window.setTimeout(() => {
+    if (!ended) return;
+    resultTitle.textContent = '挑战失败';
+    resultTitle.className = 'lose';
+    resultKicker.textContent = '本关挑战结束';
+    resultDetail.textContent = '准备好后点击按钮，再来一次挑战。';
+    resultButton.textContent = '重新挑战';
+    resultButton.hidden = false;
+    laughAudio.currentTime = 0;
+    laughAudio.play().catch(() => {});
+  }, 4000);
 }
 
 function closeResult() {
+  if (resultButton.hidden) return;
+  window.clearTimeout(resultTimer);
   resultOverlay.hidden = true;
   if (resultTitle.classList.contains('win')) level += 1;
   else streak = 0;
   makeBoard();
 }
 
-resetButton.addEventListener('click', () => { level = 1; streak = 0; makeBoard(); });
+resetButton.addEventListener('click', () => {
+  window.clearTimeout(resultTimer);
+  resultOverlay.hidden = true;
+  level = 1;
+  streak = 0;
+  makeBoard();
+});
 resultButton.addEventListener('click', closeResult);
-resultOverlay.addEventListener('click', event => { if (event.target === resultOverlay) closeResult(); });
 
 makeBoard();
